@@ -1155,13 +1155,13 @@ _CARD_FIELD:last-child {
             try {
                 let response;
                 if (!editingId) {
-                    response = await fetch('http://3.87.225.158:3065/api/employees', {
+                    response = await fetch('http://16.170.238.161:3096/api/employees', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(employee)
                     });
                 } else {
-                    response = await fetch(`http://3.87.225.158:3065/api/employees/${editingId}`, {
+                    response = await fetch(`http://16.170.238.161:3096/api/employees/${editingId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(employee)
@@ -1313,7 +1313,7 @@ _CARD_FIELD:last-child {
 
         async function updateTable() {
             try {
-                const response = await fetch('http://3.87.225.158:3065/api/employees');
+                const response = await fetch('http://16.170.238.161:3096/api/employees');
                 if (!response.ok) throw new Error('Failed to fetch employees');
                 filteredEmployees = await response.json();
                 updateTableWithFiltered();
@@ -1325,7 +1325,7 @@ _CARD_FIELD:last-child {
 
         async function editEmployee(id) {
             try {
-                const response = await fetch(`http://3.87.225.158:3065/api/employees/${id}`);
+                const response = await fetch(`http://16.170.238.161:3096/api/employees/${id}`);
                 if (!response.ok) throw new Error('Employee not found');
                 const employee = await response.json();
                 
@@ -1362,7 +1362,7 @@ _CARD_FIELD:last-child {
         async function deleteEmployee(id) {
             if (confirm('Are you sure you want to delete this employee?')) {
                 try {
-                    const response = await fetch(`http://3.87.225.158:3065/api/employees/${id}`, {
+                    const response = await fetch(`http://16.170.238.161:3096/api/employees/${id}`, {
                         method: 'DELETE'
                     });
                     if (!response.ok) throw new Error('Failed to delete employee');
