@@ -3,32 +3,38 @@ version: '3.8'
 services:
   postgres:
     image: postgres:14
-    container_name: postgres
-    restart: always
+    container_name: staffmanagement_postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: staff_db
+      POSTGRES_DB: staff_management
     ports:
-      - "5432:5432"
+      - "5096:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # ✅ Mount your init script
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
     build: ./Backend
-    container_name: backend
-    restart: always
-    ports:
-      - "3096:3096"
-    environment:
-      DB_USER: postgres
-      DB_PASSWORD: admin123
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: staff_db
+    container_name: staffmanagement_backend
     depends_on:
       - postgres
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: admin123
+      PGDATABASE: staff_management
+      PGHOST: postgres
+      PGPORT: 5432
+    ports:
+      - "3096:3096"
+
+  hr-staff-ui:
+    build: ./HR-Staffmanagement
+    container_name: staffmanagement_hr_ui
+    ports:
+      - "8161:80"
+    depends_on:
+      - backend
 
 volumes:
-  pg_data:
+  postgres_data:
